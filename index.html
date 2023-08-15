@@ -7,15 +7,37 @@
     <title>Document</title>
 </head>
 <body>
-        <button class="rock">Rock</button>
-        <button class="paper">Paper</button>
-        <button class="scissors">Scissors</button>
+    <button class="rock">Rock</button>
+    <button class="paper">Paper</button>
+    <button class="scissors">Scissors</button>
+    
+    <br>
+
+    <div>
+        <div>Your Score:
+            <div id="playerScore"></div>
+        </div>
+
+        <br>
+
+        <div>Computer Score:
+            <div id="computerScore"></div>
+        </div>
+    
+    </div>
+
+    <br>
+
+    <div>Message:
+        <div id="message"></div>
+    </div>
 
     <script>
         
         let playerSelection;
         let computerScore = 0;
         let playerScore = 0;
+        let roundCounter = 0;
 
 
         // function to generate random computer's selection
@@ -32,116 +54,85 @@
                                                                                             
         // function for geting player's selection via button listener
         function PlayerSelect() {
+            document.getElementById('message').textContent = '';
             playerSelection = this.classList.value;
+            // if(roundCounter > 5) {
+            //     if(playerScore > computerScore) {
+            //         document.getElementById('message').textContent = 'Game over. You win!';
+            //         playerScore = 0;
+            //     } else {
+            //         document.getElementById('message').textContent = 'Game over. You lose!';
+            //         computerScore = 0;
+            //     }
+            // } else {
             playRound();
-        }
+            }
+        
+
       
         // function for playing one round
         function playRound() {
-            
-            let computerSelection = getComputerSelection();
-            
-            if(playerSelection == computerSelection) {
-                    alert('Tie match!');
-                }
-            else if(playerSelection == 'rock') {
-                if (computerSelection == 'paper') {
-                        ++computerScore;
-                        alert('You lose! Paper beats rock');
-                        
-                } else {
-                        ++playerScore;
-                        alert('You win! Rock beats scissors');
-                }
-            }
-            else if(playerSelection == 'scissors') {
-                if (computerSelection == 'rock') {
-                    ++computerScore;
-                    alert('You lose! Rock beats scissors');
-                } else {
-                    ++playerScore;
-                    alert('You win! Scissors beats paper');
-                }
-            }
-            else if(playerSelection == 'paper') {
-                if (computerSelection == 'scissors') {
-                    ++computerScore;
-                    alert('You lose! Scissors beat paper');
-                } else {
-                    ++playerScore;
-                    alert('You win! Paper beats rock');
-                }
-            }
-            
+            ++roundCounter;
 
+            if(roundCounter > 5) {
+                if(playerScore > computerScore) {
+                    document.getElementById('message').textContent = 'Game over. You win!';
+                    playerScore = 0;
+                } else {
+                    document.getElementById('message').textContent = 'Game over. You lose!';
+                    computerScore = 0;
+                }
+            } else {
+
+                let computerSelection = getComputerSelection();
+                
+                if(playerSelection == computerSelection) {
+                        document.getElementById('message').textContent = 'Tie!';
+                        
+                    }
+                else if(playerSelection == 'rock') {
+                    if (computerSelection == 'paper') {
+                            ++computerScore;
+                            document.getElementById('computerScore').textContent = computerScore;
+                            
+                    } else {
+                            ++playerScore;
+                            document.getElementById('playerScore').textContent = playerScore;
+
+                    }
+                }
+                else if(playerSelection == 'scissors') {
+                    if (computerSelection == 'rock') {
+                        ++computerScore;
+                        document.getElementById('computerScore').textContent = computerScore;
+
+                    } else {
+                        ++playerScore;
+                        document.getElementById('playerScore').textContent = playerScore;
+
+                    }
+                }
+                else if(playerSelection == 'paper') {
+                    if (computerSelection == 'scissors') {
+                        ++computerScore;
+                        document.getElementById('computerScore').textContent = computerScore;
+
+                    } else {
+                        ++playerScore;
+                        document.getElementById('playerScore').textContent = playerScore;
+
+                    }
+                }  
+            }
         }
+
+        
 
 
         // adding event and listener to all three buttons
         const btns = document.querySelectorAll('button')
         btns.forEach(button => button.addEventListener('click', PlayerSelect));
-        // const rock = document.querySelector('.rock');
-        // rock.addEventListener('click', playRound);
-
-
-
-        // function game() {
-            
-
-
-        //     /* Round 1 */
-        //     playRound();
-        //     console.log(playerScore);
-        //     console.log(computerScore);
-            
-            
-
-        //     /* Round 2 */
-
-        //     playRound();
-        //     console.log(playerScore);
-        //     console.log(computerScore);
-            
-
-        //     /* Round 3 */
-
-        //     playRound();
-        //     console.log(playerScore);
-        //     console.log(computerScore);
-            
-
-        //     /* Round 4 */
-
-        //     playRound();
-        //     console.log(playerScore);
-        //     console.log(computerScore);
-            
-        //     /* Round 5 */
-
-        //     playRound();
-        //     console.log(playerScore);
-        //     console.log(computerScore);
-
-        //     if(playerScore = computerScore) {
-        //         console.log(`Tied Game! Play again. Your score: ${playerScore}, computer score: ${computerScore}`);
-        //         alert(`Tied Game! Your score: ${playerScore}, computer score: ${computerScore}`);
-        //     }
-        //     else if(playerScore < computerScore) {
-        //         console.log(`You lost the game! Your score: ${playerScore}, computer score: ${computerScore}`);
-        //         alert(`You lost the game! Your score: ${playerScore}, computer score: ${computerScore}`);
-        //     }
-        //     else if(playerScore > computerScore) {
-        //         console.log(`You won the game! Your score: ${playerScore}, computer score: ${computerScore}`);
-        //         alert(`You won the game! Your score: ${playerScore}, computer score: ${computerScore}`);
-
-        //     }
-            
-            
-
-
-        // }
-
-        //console.log(game());
+        
 
     </script>
 </body>
