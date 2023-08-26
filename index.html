@@ -5,13 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    
 </head>
 <body>
-    <button class="rock">Rock</button>
-    <button class="paper">Paper</button>
-    <button class="scissors">Scissors</button>
-    
-    <br>
 
     <div>
         <div>Your Score:
@@ -20,7 +17,7 @@
 
         <br>
 
-        <div>Computer Score:
+        <div class="score">Computer Score:
             <div id="computerScore"></div>
         </div>
     
@@ -32,6 +29,27 @@
         <div id="message"></div>
     </div>
 
+    <br>
+
+    <div>Round:
+        <div id="roundCounter"></div>
+    </div>
+
+    <div class="resetContainer">
+        <a href = "/home/george/repos/rock-paper-scissors/rockpaperscissors/index.html"
+        class ="reset">Reset</a>
+    </div>
+
+    <div class="topButton">
+        <button class="rock"><img src="rock.png"/></button>
+    </div>
+
+    <div class="bottomButtons">
+        <button class="paper"><img src="paper.png"/></button>
+        <button class="scissors"><img src="scissors.png"/></button>
+    </div>
+
+    <!-- JavaScript for the game -->
     <script>
         
         let playerSelection;
@@ -51,88 +69,108 @@
                 return 'scissors';
             }
         }
+
                                                                                             
-        // function for geting player's selection via button listener
-        function PlayerSelect() {
-            document.getElementById('message').textContent = '';
-            playerSelection = this.classList.value;
-            // if(roundCounter > 5) {
-            //     if(playerScore > computerScore) {
-            //         document.getElementById('message').textContent = 'Game over. You win!';
-            //         playerScore = 0;
-            //     } else {
-            //         document.getElementById('message').textContent = 'Game over. You lose!';
-            //         computerScore = 0;
-            //     }
-            // } else {
-            playRound();
-            }
         
+        
+        function resetGame() {
+            computerScore = 0;
+            playerScore = 0;
+            roundCounter = 0;
+            document.getElementById('computerScore').textContent = computerScore;
+            document.getElementById('playerScore').textContent = playerScore;
+            document.getElementById('roundCounter').textContent = roundCounter;
+
+        }
 
       
         // function for playing one round
         function playRound() {
-            ++roundCounter;
 
-            if(roundCounter > 5) {
+            let computerSelection = getComputerSelection();
+            if(roundCounter > 4) {
+                resetGame();
+            }
+
+
+            
+
+           
+            
+            if(playerSelection == computerSelection) {
+                    document.getElementById('message').textContent = 'Tie!';
+                    
+                }
+            else if(playerSelection == 'rock') {
+                if (computerSelection == 'paper') {
+                        ++computerScore;
+                        document.getElementById('computerScore').textContent = computerScore;
+                        document.getElementById('message').textContent = 'Round loss';
+
+                } else {
+                        ++playerScore;
+                        document.getElementById('playerScore').textContent = playerScore;
+                        document.getElementById('message').textContent = 'Round won';
+
+                }
+            }
+            else if(playerSelection == 'scissors') {
+                if (computerSelection == 'rock') {
+                    ++computerScore;
+                    document.getElementById('computerScore').textContent = computerScore;
+                    document.getElementById('message').textContent = 'Round loss';
+
+                } else {
+                    ++playerScore;
+                    document.getElementById('playerScore').textContent = playerScore;
+                    document.getElementById('message').textContent = 'Round won';
+
+                }
+            }
+            else if(playerSelection == 'paper') {
+                if (computerSelection == 'scissors') {
+                    ++computerScore;
+                    document.getElementById('computerScore').textContent = computerScore;
+                    document.getElementById('message').textContent = 'Round loss';
+
+                } else {
+                    ++playerScore;
+                    document.getElementById('playerScore').textContent = playerScore;
+                    document.getElementById('message').textContent = 'Round won';
+
+                }
+            }  
+
+            ++roundCounter;
+            document.getElementById('roundCounter').textContent = roundCounter;
+
+            if(roundCounter >= 5) {
                 if(playerScore > computerScore) {
                     document.getElementById('message').textContent = 'Game over. You win!';
-                    playerScore = 0;
+                  
                 } else {
                     document.getElementById('message').textContent = 'Game over. You lose!';
-                    computerScore = 0;
                 }
-            } else {
-
-                let computerSelection = getComputerSelection();
-                
-                if(playerSelection == computerSelection) {
-                        document.getElementById('message').textContent = 'Tie!';
-                        
-                    }
-                else if(playerSelection == 'rock') {
-                    if (computerSelection == 'paper') {
-                            ++computerScore;
-                            document.getElementById('computerScore').textContent = computerScore;
-                            
-                    } else {
-                            ++playerScore;
-                            document.getElementById('playerScore').textContent = playerScore;
-
-                    }
-                }
-                else if(playerSelection == 'scissors') {
-                    if (computerSelection == 'rock') {
-                        ++computerScore;
-                        document.getElementById('computerScore').textContent = computerScore;
-
-                    } else {
-                        ++playerScore;
-                        document.getElementById('playerScore').textContent = playerScore;
-
-                    }
-                }
-                else if(playerSelection == 'paper') {
-                    if (computerSelection == 'scissors') {
-                        ++computerScore;
-                        document.getElementById('computerScore').textContent = computerScore;
-
-                    } else {
-                        ++playerScore;
-                        document.getElementById('playerScore').textContent = playerScore;
-
-                    }
-                }  
             }
+            
         }
 
+
         
 
 
-        // adding event and listener to all three buttons
+        // adding event and listener to rock, paper and scissors buttons
+        
         const btns = document.querySelectorAll('button')
         btns.forEach(button => button.addEventListener('click', PlayerSelect));
-        
+
+        // function for geting player's selection via button listener
+        function PlayerSelect() {
+            document.getElementById('message').textContent = '';
+            playerSelection = this.classList.value;
+            playRound();
+            }
+    
 
     </script>
 </body>
